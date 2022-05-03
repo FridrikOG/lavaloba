@@ -130,7 +130,7 @@ condition = True
 base_name = run_name
 
 while condition:
-	
+  
     run_name = base_name + '_{0:03}'.format(i) 
 
     backup_advanced_file = run_name + '_advanced_inp.bak'
@@ -172,7 +172,7 @@ if ( len(shape_name) > 0 ):
         par     = list(prt) + [pts.shape[0]]
 
         for pij in xrange(len(prt)):
-        	ptchs.append(Polygon(pts[par[pij]:par[pij+1]]))
+          ptchs.append(Polygon(pts[par[pij]:par[pij+1]]))
     
         ax.add_collection(PatchCollection(ptchs,facecolor=cccol[nshp,:],edgecolor='k', linewidths=.1))
 
@@ -314,7 +314,7 @@ for j in range(0,n_test):
 
     x_test = xmin + np.random.uniform(0, 1, size=1)*(xmax-xmin)
     y_test = ymin + np.random.uniform(0, 1, size=1)*(ymax-ymin)
-	
+  
     xi = (x_test - xmin)/cell
     yi = (y_test - ymin)/cell
 
@@ -338,12 +338,12 @@ for j in range(0,n_test):
 
     xt = x_test + 1000 * slope_test * np.cos(angle_test * np.pi/180) 
     xt = y_test + 1000 * slope_test * np.sin(angle_test * np.pi/180) 
-	
+  
     if ( plot_lobes_flag ) or ( plot_flow_flag):
 
         plt.plot(x_test,y_test,'o')
         plt.plot( [x_test,xt] , [y_test,yt])
-	
+  
 # Compute the path of maximum slope form the vent
 
 xold = x_vent[0]
@@ -385,7 +385,7 @@ for i in range(0,max_slope_units):
     if ( plot_lobes_flag ) or ( plot_flow_flag):
 
         plt.plot([xold,x_max_slope],[yold,y_max_slope],'b-')
-	
+  
 
 Xs_1d = np.reshape(Xs,-1)
 Ys_1d = np.reshape(Ys,-1)
@@ -436,7 +436,7 @@ print ('')
 # counter for the re-evaluation of the slope
 flows_counter = 0
 
-start = time.clock()
+start = time.process_time()
 
 est_rem_time = ''
 
@@ -514,7 +514,7 @@ for flow in range(0,n_flows):
             x[i] = x_vent[0]
             y[i] = y_vent[0]
  
-	else:
+        else:
 
             if ( vent_flag == 0 ):
 
@@ -619,7 +619,7 @@ for flow in range(0,n_flows):
         else:
 
             angle[i] = max_slope_angle
-		
+    
         # factor for the lobe eccentricity
         aspect_ratio = min(max_aspect_ratio,1.0 + aspect_ratio_coeff * slope)
 
@@ -773,7 +773,7 @@ for flow in range(0,n_flows):
 
             idx = i-1
 
-		
+    
         # save the index of the parent and the distance from first lobe of the chain    
         parent[i] = idx
         dist_int[i] = dist_int[idx] + 1
@@ -795,7 +795,7 @@ for flow in range(0,n_flows):
         # if slope = 0 the lobe is a circle (x1=x2);
         # if slope > 1 the lobe is an ellipse.
 
-		
+    
         # STEP 1: COMPUTE THE SLOPE AND THE MAXIMUM SLOPE ANGLE 
         #         The direction az_i as described in the paper is found here 
 
@@ -896,12 +896,12 @@ for flow in range(0,n_flows):
         else:
 
             new_angle = max_slope_angle
-		
+    
 
 
         # STEP 3: ADD THE EFFECT OF INERTIA
         #         the direction az_i'' as described in the paper is found here        
-		   
+       
         # cos and sin of the angle of the parent lobe
         cos_angle1 = np.cos(angle[idx]*deg2rad)
         sin_angle1 = np.sin(angle[idx]*deg2rad)
@@ -932,23 +932,23 @@ for flow in range(0,n_flows):
         # center of the new lobe in a coordinate system defined by the
         # semi-axes of the existing lobe
         a = np.tan(deg2rad*(new_angle-angle[idx]))
-		
+    
         # xt is the 1st-coordinate of the point of the boundary of the ellipse
         # definind the direction of the new lobe, in a coordinate system 
         # defined by the semi-axes of the existing lobe
         if ( np.cos(deg2rad*(new_angle-angle[idx])) > 0 ):
-		    
+        
             xt = np.sqrt( x1[idx]**2 * x2[idx]**2 / ( x2[idx]**2 + x1[idx]**2 * a**2 ) )
-		    
+        
         else:
-		    
+        
             xt = - np.sqrt( x1[idx]**2 * x2[idx]**2 / ( x2[idx]**2 + x1[idx]**2 * a**2 ) )
 
         # yt is the 2nd-coordinate of the point of the boundary of the ellipse
         # definind the direction of the new lobe, in a coordinate system 
         # defined by the semi-axes of the existing lobe
         yt = a * xt
-		
+    
         # (delta_x,delta_y) is obtained rotating the vector (xt,yt) by the
         # angle defined by the major semi-axis of the existing lobe. In this
         # way we obtain the location in a coordinate-system centered in the
@@ -957,7 +957,7 @@ for flow in range(0,n_flows):
 
         delta_x = xt * cos_angle1 - yt * sin_angle1
         delta_y = xt * sin_angle1 + yt * cos_angle1
-		   
+       
         # The slope coefficient is evaluated at the point of the boundary of the ellipse
         # definind by the direction of the new lobe
         
@@ -996,15 +996,15 @@ for flow in range(0,n_flows):
         # the same volume for all the lobes.
         new_x1 = np.sqrt(lobe_area/np.pi)*np.sqrt(aspect_ratio)
         new_x2 = np.sqrt(lobe_area/np.pi)/np.sqrt(aspect_ratio)
-		 
+     
         # v1 is the distance of the new point found on the boundary of the lobe
         # from the center of the lobe
         v1 = np.sqrt(delta_x**2 + delta_y**2)
-		
+    
         # v2 is the distance between the centers of the two lobes when they
         # intersect in one point only
         v2 = v1 + new_x1
-		
+    
         # v is the distance between the centers of the two lobes, according to 
         # the value of the parameter dist_fact   
         v = ( v1 * ( 1.0 - dist_fact ) + v2 * dist_fact ) / v1  
@@ -1029,7 +1029,7 @@ for flow in range(0,n_flows):
         x2[i] = new_x2
         x[i] = x_new
         y[i] = y_new
-		
+    
         if ( saveshape_flag ):
 
             # Compute n_points on the lobe boundary
@@ -1160,7 +1160,7 @@ for flow in range(0,n_flows):
 
         # Update the deposit of the lava lobes over the computational grid
         if ( topo_mod_flag == 2 ) and ( lobes_counter == n_lobes_counter ):
-		    
+        
             lobes_counter = 0
             np.copyto(Ztot,Ztot_temp)
 
@@ -1230,7 +1230,7 @@ for flow in range(0,n_flows):
         p = PatchCollection(patch, match_original = True)
         ax.add_collection(p)
 
-    elapsed = (time.clock() - start)
+    elapsed = (time.process_time() - start)
 
     estimated = np.ceil( elapsed * n_flows / (flow+1) - elapsed )
     est_rem_time = str(datetime.timedelta(seconds=estimated))
@@ -1243,7 +1243,7 @@ if ( n_flows > 1):
     sys.stdout.write("[%-20s] %d%%" % ('='*20, last_percentage))
     sys.stdout.flush()
 
-elapsed = (time.clock() - start)
+elapsed = (time.process_time() - start)
 
 print ('')
 print ('')
