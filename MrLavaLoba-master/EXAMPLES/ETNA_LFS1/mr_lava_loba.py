@@ -458,7 +458,7 @@ n_lobes_tot = 0
 # Loop over the number of flows defined in the input file input_data.py
 n_flow_time = time.process_time()
 print("LINE 460 n flows  ", n_flow_time)
-for flow in range(0, n_flows):
+for flow in range(0, n_flows): #1024 times loop
 
     # Small array of integers (0 or 1 ) around the lobe defining the cells touched by the lobe
     Zflow_local_array = np.zeros(
@@ -512,7 +512,7 @@ for flow in range(0, n_flows):
 
     lobes_counter = 0
 
-    for i in range(0, n_init):
+    for i in range(0, n_init):  # 1 initial 
 
         if (n_flows == 1):
             # Print on screen bar with percentage of flows computed
@@ -730,13 +730,13 @@ for flow in range(0, n_flows):
             w.poly(parts=[shape_verts.tolist()])
             w.record(str(i+1), str(dist_int[i]),
                      str(descendents[i]), str(0), str(flow+1))
-    print("Line 733 ", n_flow_time)
+    # print("Line 733 ", n_flow_time)
     last_lobe = n_lobes
     n_lobes_time = time.process_time()
-    print("LINE 736 n lobes time  ")
+    # print("LINE 736 n lobes time  ")
 
     # Loop one
-    print("N init ", n_init, " n lobes ",  n_lobes)
+    # print("N init ", n_init, " n lobes ",  n_lobes)
     # So here it goes from 1 to 207
     for i in range(n_init, n_lobes):
 
@@ -805,7 +805,7 @@ for flow in range(0, n_flows):
         last = i
         # Loop 2
         count_inside += 1
-        print("DSFdsf ", dist_int[idx])
+        # prcint("DSFdsf ", dist_int[idx])
         for j in range(0, dist_int[idx]+1):
 
             previous = parent[last]
@@ -1196,7 +1196,7 @@ for flow in range(0, n_flows):
 
             lobes_counter = 0
             np.copyto(Ztot, Ztot_temp)
-    print("LINE 1193 n lobes time  ", n_lobes_time)
+    # print("LINE 1193 n lobes time  ", n_lobes_time)
     if (hazard_flag):
 
         # Update the hazard map accounting for the number of descendents, representative

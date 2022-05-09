@@ -3,7 +3,7 @@
 run_name = 'HAWAII' # is the easternmost fissure
 
 # File name of ASCII digital elevation model
-source = "test20m.asc"
+source = "tinit_33.asc"
 
 # This flag select how multiple initial coordinates are treated:
 # vent_flag = 0  => the initial lobes are on the vents coordinates

@@ -17,7 +17,7 @@ saveraster_flag = 1
 flag_threshold = 1
 
 # If plot_lobes_flag = 1 then all the lobes generated are plotted
-plot_lobes_flag = 0
+plot_lobes_flag = 1
 
 # If plot_lobes_flag = 1 then all the lobes generated are plotted
 plot_flow_flag = 0
