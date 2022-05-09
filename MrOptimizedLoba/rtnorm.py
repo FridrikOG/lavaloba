@@ -109,7 +109,6 @@ def rtnorm(a, b, mu=0., sigma=1., size=1, probabilities=False):
     else:
         return r
 
-@jit(nopython=True)
 def rtstdnorm(a, b):
     r"""
     RTNORM    Pseudorandom numbers from a truncated (normalized) Gaussian
