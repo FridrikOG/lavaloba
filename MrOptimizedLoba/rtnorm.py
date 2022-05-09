@@ -13,7 +13,8 @@ Update on 11/27/2014: Added `erf` fallback implementation for missing
 
 @author: Christoph Lassner
 """
-
+import numba
+from numba import jit
 from numpy.random import uniform as rand, normal as randn, randint as randi
 from numpy import sqrt, pi, exp, log, floor, array
 try:
@@ -24,7 +25,7 @@ except:
   # Use a fallback implementation just relying on `math.erf` and
   # `numpy.nditer`.
   from numpy import nditer # Loop over N-dimensional arrays
-  import math # For erf function in math
+  import math # For erf function in math  
   def erf(arr):
     r"""
     Replicating SciPy erf function using math erf function to remove
@@ -108,7 +109,7 @@ def rtnorm(a, b, mu=0., sigma=1., size=1, probabilities=False):
     else:
         return r
 
-
+@jit(nopython=True)
 def rtstdnorm(a, b):
     r"""
     RTNORM    Pseudorandom numbers from a truncated (normalized) Gaussian

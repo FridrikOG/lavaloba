@@ -108,7 +108,7 @@ thickening_parameter = 0.2
 # lobe_exponent = 0  => the new lobe is generated from the last one.
 lobe_exponent = 0.01
 
-# max_slope_prob is related to the porbability that the direction of 
+# max_slope_prob is related to the probability that the direction of 
 # the new lobe is close to the maximum slope direction:
 # max_slope_prob = 0 => all the directions have the same probability;
 # max_slope_prob > 0 => the maximum slope direction has a larger 
