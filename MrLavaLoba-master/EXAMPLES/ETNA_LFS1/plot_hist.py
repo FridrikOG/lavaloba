@@ -22,7 +22,7 @@ source = 'BDB_vents_tdm1_1000MIL_020_thickness_masked.asc'
 # the built-in linecache module
 hdr = [getline(source, i) for i in range(1,7)]
 values = [float(h.split(" ")[-1].strip()) \
- for h in hdr]
+for h in hdr]
 cols,rows,lx,ly,cell,nd = values
 xres = cell
 yres = cell * -1
