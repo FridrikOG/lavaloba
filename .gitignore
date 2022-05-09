@@ -45,3 +45,6 @@ MrLavaLoba-master/EXAMPLES/ETNA_LFS1/LFS1_2001_004_dist_masked.asc
 MrLavaLoba-master/EXAMPLES/ETNA_LFS1/LFS1_2001_004_dist_full.asc
 MrOptimizedLoba/test_1212.ipynb
 MrOptimizedLoba/test_numba.py
+*.bak
+MrLavaLoba-master/EXAMPLES/ETNA_LFS1/example_run_000_advanced_inp.bak
+*.asc
