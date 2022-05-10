@@ -62,7 +62,7 @@ total_volume = 30000000  # m^3
 fixed_dimension_flag = 1
 
 # Area of each lobe ( only effective when volume_flag = 0 or fixed_dimension_flag = 1 )
-lobe_area = 4000   # m^2 
+lobe_area = 1000   # m^2 
 
 # Thickness of each lobe ( only effective when volume_flag = 0 or fixed_dimension_flag  2 )
 # avg_lobe_thickness = 0.07  # m
