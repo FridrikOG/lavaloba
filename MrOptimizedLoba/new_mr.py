@@ -26,7 +26,7 @@ import math
 
 @cuda.jit
 def cuda_elip_1(ax, circle, new_array):
-    pos = cuda.grid(1)
+    pos = cuda.threadIdx.x + cuda.blockIdx.x * cuda.blockDim.x
     if pos < circle.size:
         new_array[pos] = ax * circle[pos]
 
@@ -48,7 +48,11 @@ def ellipse( xc , yc , ax1 , ax2 , angle , X_circle , Y_circle ):
     threads = 256
     blocks = 1
 
-    cuda_elip_1[threads, blocks](ax1, X_circle, X)
+        
+    threadsperblock = 32
+    blockspergrid = (X_circle.size + (threadsperblock - 1)) // threadsperblock  
+
+    cuda_elip_1[threadsperblock, blockspergrid](ax1, X_circle, X)
     # X = ax1 * X_circle
     Y = ax2 * Y_circle
 
