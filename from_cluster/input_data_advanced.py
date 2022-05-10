@@ -3,6 +3,7 @@
 # flows. Leave the field empy [] if you don't want to use it.
 # If you want to use more than one file separate them with a comma.
 # Example: restart_file = ['flow_001_thickness_full.asc','flow_002_thickness_full.asc]
+#restart_files = ['test_ASKA_052_thickness_full.asc']
 restart_files = []
 # If saveshape_flag = 1 then the output with the lobes is saved on a shapefile
 saveshape_flag = 0
@@ -59,7 +60,7 @@ start_from_dist_flag = 0
 # dist fact > 0  => increase the distance of the center of the new lobe
 # 		    from the border of the previous one;
 # dist_fact = 1  => the two lobes touch in one point only.
-dist_fact = 1
+dist_fact = 0.7 
 
 # Number of points for the lobe profile
 npoints = 30

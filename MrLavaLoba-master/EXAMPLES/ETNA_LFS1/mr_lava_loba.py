@@ -1433,3 +1433,5 @@ if (plot_flow_flag) or (plot_lobes_flag):
     plt.ylim([ymin, ymax])
     plt.xlim([xmin, xmax])
     plt.show()
+    plt.close()
+
