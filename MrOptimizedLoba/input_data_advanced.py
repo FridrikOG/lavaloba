@@ -6,7 +6,7 @@
 restart_files = []
 
 # If saveshape_flag = 1 then the output with the lobes is saved on a shapefile
-saveshape_flag = 1
+saveshape_flag = 0
 
 # If saveraster_flag = 1 then the raster output is saved as a *.asc file
 saveraster_flag = 1
@@ -20,7 +20,7 @@ flag_threshold = 1
 plot_lobes_flag = 1
 
 # If plot_lobes_flag = 1 then all the lobes generated are plotted
-plot_flow_flag = 0
+plot_flow_flag = 1
 
 # The number of lobes of the flow is defined accordingly to a random uniform
 # distribution or to a beta law, as a function of the flow number.
@@ -70,10 +70,10 @@ npoints = 30
 # aspect_ratio_coeff = 0  => the lobe is always a circle
 # aspect_ratio_coeff > 0  => the lobe is an ellipse, with the aspect ratio
 #			     increasing with the slope 
-aspect_ratio_coeff = 2.0
+aspect_ratio_coeff = 20.0
 
 # Maximum aspect ration of the lobes 
-max_aspect_ratio = 2.5
+max_aspect_ratio = 5
 
 # Shapefile name (use '' if no shapefile is present)
 shape_name = ''
