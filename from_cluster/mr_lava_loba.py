@@ -22,6 +22,53 @@ from random import randrange
 from os.path import exists
 import gc
 
+from numba import jit
+
+
+# @jit(nopython=True)
+# def slope_calc(Fy_test, Fx_test):
+#      # major semi-axis direction
+#     max_slope_angle = np.mod(
+#         180 + (180 * np.arctan2(Fy_test, Fx_test) / np.pi), 360)
+
+#     # slope of the topography at (x[0],y[0])
+#     slope = np.sqrt(np.square(Fx_test)+np.square(Fy_test))
+
+#     out = (max_slope_angle, slope)
+
+#     return out
+
+
+@jit(nopython=True)
+def get_two_xi(slope):
+    # factor for the lobe eccentricity
+    aspect_ratio = min(max_aspect_ratio, 1.0 + aspect_ratio_coeff * slope)
+
+    # semi-axes of the lobe:
+    # x1(i) is the major semi-axis of the lobe;
+    # x2(i) is the minor semi-axis of the lobe.
+    xonei = np.sqrt(lobe_area/np.pi) * np.sqrt(aspect_ratio)
+    xtwoi = np.sqrt(lobe_area/np.pi) / np.sqrt(aspect_ratio)
+    out = (xonei, xtwoi)
+
+    return out
+
+@jit(nopython=True)
+def get_two_xi(slope):
+    # factor for the lobe eccentricity
+    aspect_ratio = min(max_aspect_ratio, 1.0 + aspect_ratio_coeff * slope)
+
+    # semi-axes of the lobe:
+    # x1(i) is the major semi-axis of the lobe;
+    # x2(i) is the minor semi-axis of the lobe.
+    xonei = np.sqrt(lobe_area/np.pi) * np.sqrt(aspect_ratio)
+    xtwoi = np.sqrt(lobe_area/np.pi) / np.sqrt(aspect_ratio)
+    out = (xonei, xtwoi)
+
+    return out
+
+
+@jit(nopython=True)
 def ellipse( xc , yc , ax1 , ax2 , angle , X_circle , Y_circle ):
 
     cos_angle = np.cos(angle*np.pi/180)
@@ -40,6 +87,7 @@ def ellipse( xc , yc , ax1 , ax2 , angle , X_circle , Y_circle ):
     ye = yc + X*sin_angle + Y*cos_angle
 
     return (xe,ye)
+
 
 def local_intersection(Xc_local,Yc_local,xc_e,yc_e,ax1,ax2,angle,xv,yv,nv2):
 
@@ -492,7 +540,7 @@ for flow in range(0,n_flows):
     if ( a_beta == 0 ) and ( b_beta == 0 ):
         
         # DEFINE THE NUMBER OF LOBES OF THE FLOW (RANDOM VALUE BETWEEN MIN AND MAX)
-        n_lobes = int( np.ceil( np.random.uniform(min_n_lobes, max_n_lobes, size=1) ) )
+        n_lobes = int( np.ceil( np.random.uniform(min_n_lobes, max_n_lobes, size=1) ))
 
     else:
 
@@ -697,12 +745,16 @@ for flow in range(0,n_flows):
                   (1.0-xi_fract)*( Ztot[iy+1,ix] - Ztot[iy,ix] ) ) / cell
 
     
+
+        # ( max_slope_angle,slope ) = slope_calc(Fy_test, Fx_test)
+        ''' CONVERTED INTO A FUNCTION '''
         # major semi-axis direction
         max_slope_angle = np.mod(180.0 + ( 180.0 * np.arctan2(Fy_test,Fx_test) / np.pi ),360.0)
         
         # slope of the topography at (x[0],y[0])
         slope = np.sqrt(np.square(Fx_test)+np.square(Fy_test))
-        
+        ''' END '''
+
         # PERTURBE THE MAXIMUM SLOPE ANGLE ACCORDING TO PROBABILITY LAW
         
         # this expression define a coefficient used for the direction of the next slope
@@ -729,19 +781,24 @@ for flow in range(0,n_flows):
 
             angle[i] = max_slope_angle
 		
-        # factor for the lobe eccentricity
-        aspect_ratio = min(max_aspect_ratio,1.0 + aspect_ratio_coeff * slope)
 
-        # semi-axes of the lobe:
-        # x1(i) is the major semi-axis of the lobe;
-        # x2(i) is the minor semi-axis of the lobe.
-        x1[i] = np.sqrt(lobe_area/np.pi) * np.sqrt(aspect_ratio)
-        x2[i] = np.sqrt(lobe_area/np.pi) / np.sqrt(aspect_ratio)
-    
+        (x1[i], x2[i])  = get_two_xi(slope)
+        ''' CONVERTED INTO A FUNCTION '''
+        # # factor for the lobe eccentricity
+        # aspect_ratio = min(max_aspect_ratio,1.0 + aspect_ratio_coeff * slope)
+
+        # # semi-axes of the lobe:
+        # # x1(i) is the major semi-axis of the lobe;
+        # # x2(i) is the minor semi-axis of the lobe.
+        # x1[i] = np.sqrt(lobe_area/np.pi) * np.sqrt(aspect_ratio)
+        # x2[i] = np.sqrt(lobe_area/np.pi) / np.sqrt(aspect_ratio)
+        ''' end '''
+
+        plotting_time = time.process_time()  
         if ( plot_lobes_flag ):
 
             patch.append(Ellipse([x[i],y[i]], 2*x1[i], 2*x2[i], angle[i], facecolor = 'none',edgecolor='k'))
-
+        # print("Line 801 (PLOTTING  took ", plotting_time )
         if ( saveraster_flag == 1 ):
 
             # compute the points of the lobe
@@ -1147,14 +1204,14 @@ for flow in range(0,n_flows):
         x_new = x[idx] + v * delta_x
         y_new = y[idx] + v * delta_y
             
-                        
+        plotting_time = time.process_time()                
         # plot the new lobe
         if ( plot_lobes_flag == 1 ):
 
             patch.append(Ellipse([x_new,y_new], 2*new_x1, 2*new_x2, new_angle, \
                                  facecolor = 'none',edgecolor='r'))
                                 
-                
+        # print("line 1207 (PLOTTING) took ", plotting_time)        
         # store the parameters of the new lobe in arrays    
         angle[i] = new_angle
         x1[i] = new_x1
@@ -1337,10 +1394,10 @@ for flow in range(0,n_flows):
         
     # plot the patches for the lobes
     # p = PatchCollection(patch, facecolor = 'r',edgecolor='none',alpha=0.05)
-    if ( plot_lobes_flag == 1 ):
+    # if ( plot_lobes_flag == 1 ):
 
-        p = PatchCollection(patch, match_original = True)
-        ax.add_collection(p)
+    #     p = PatchCollection(patch, match_original = True)
+    #     ax.add_collection(p)
 
     if sys.version_info >= (3, 0):
         elapsed = (time.process_time() - start)
@@ -1363,6 +1420,10 @@ if sys.version_info >= (3, 0):
 else:
     elapsed = (time.clock() - start)
 
+
+if ( plot_lobes_flag == 1 ):
+    p = PatchCollection(patch, match_original = True)
+    ax.add_collection(p)
 
 print ('')
 print ('')
