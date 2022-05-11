@@ -72,21 +72,20 @@ print(xe)
 #     if pos < circle.size:
 #         new_array[pos] = ax * circle[pos]
 
-# CUDA kernel
-# @cuda.jit
-# def something(io_array):
-#     pos = cuda.grid(1)
-#     if pos == 0:
-#         io_array[pos] = 1
-#     elif pos < 256:
-#         io_array[pos] = io_array[pos-1] + 2 # do the computation
+
+@cuda.jit
+def something(io_array):
+    i = cuda.grid(1)
+    if i < io_array.size:
+        io_array[i] = io_array[i] + i
+
   
 
-# Host code   
-# data = numpy.ones(256)
-# threadsperblock = 256
-# blockspergrid = math.ceil(data.shape[0] / threadsperblock)
-# something[blockspergrid, threadsperblock](data)
+ 
+data = np.ones(256)
+threadsperblock = 256
+blockspergrid = math.ceil(data.shape[0] / threadsperblock)
+something[blockspergrid, threadsperblock](data)
 
 # threads = 256
 # blocks = 1
