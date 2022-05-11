@@ -30,6 +30,13 @@ try:
   runtime = float(os.environ['runtime'])
   minnlobes = float(os.environ['minnlobes'])
 except:
+  # from variables_xVent_yVent_length_flowrate_runtime_minnlobes_test 339377,380305,0.04,5,660,0.7
+  xVent = 339377
+  yVent = 380305
+  length = 0.04
+  flowrate = 5
+  runtime = 660
+  minnlobes = 0.7
   print("Using default values for xVent,yVent,length,flowrate,runtime,minnlobes")
 
 # Set destination directory if provided. The directory itself needs to be
