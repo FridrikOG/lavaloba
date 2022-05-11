@@ -69,15 +69,15 @@ def get_two_xi(slope):
     return out
 
 
-@vectorize([int64(int64,int64), float32(float32,float32), float64(float64,float64)])
+@vectorize([int64(int64,int64), float32(float32,float32), float64(float64,float64)], nopython=True)
 def multiply_array(n, arr):
     return n*arr
 
-@vectorize([int64(int64,int64), float32(float32,float32), float64(float64,float64)])
+@vectorize([int64(int64,int64), float32(float32,float32), float64(float64,float64)], nopython=True)
 def add_array(n, arr):
     return n+arr
 
-@vectorize([int64(int64,int64), float32(float32,float32), float64(float64,float64)])
+@vectorize([int64(int64,int64), float32(float32,float32), float64(float64,float64)], nopython=True)
 def sub_array(n, arr):
     return n-arr
 
@@ -103,6 +103,26 @@ def ellipse( xc , yc , ax1 , ax2 , angle , X_circle , Y_circle ):
     # ye = yc + X*sin_angle + Y*cos_angle
 
     return (xe,ye)
+
+# @jit(nopython=True)
+# def ellipse( xc , yc , ax1 , ax2 , angle , X_circle , Y_circle ):
+
+#     cos_angle = np.cos(angle*np.pi/180)
+#     sin_angle = np.sin(angle*np.pi/180)
+
+#     # x1 = xc + ax1 * cos_angle
+#     # y1 = yc + ax1 * sin_angle
+
+#     # x2 = xc - ax2 * sin_angle
+#     # y2 = yc + ax2 * cos_angle
+
+#     X = ax1 * X_circle
+#     Y = ax2 * Y_circle
+
+#     xe = xc + X*cos_angle - Y*sin_angle
+#     ye = yc + X*sin_angle + Y*cos_angle
+
+#     return (xe,ye)
 
 
 # def ellipse( xc , yc , ax1 , ax2 , angle , X_circle , Y_circle ):
@@ -1372,7 +1392,7 @@ for flow in range(0,n_flows):
                     print (Zflow_local_int)
 
                 Zflow_local_array[i,0:j_top-j_bottom,0:i_right-i_left] = Zflow_local_int
-                
+
     ''' for i in range(n_init,n_lobes): END '''
     if ( hazard_flag ):
 
