@@ -22,8 +22,9 @@ from random import randrange
 from os.path import exists
 import gc
 
+from numba import vectorize, int64, float32, float64
 from numba import jit
-
+import math
 
 # @jit(nopython=True)
 # def slope_calc(Fy_test, Fx_test):
@@ -67,6 +68,41 @@ def get_two_xi(slope):
 
     return out
 
+
+# @vectorize([int64(int64,int64), float32(float32,float32), float64(float64,float64)])
+# def multiply_array(n, arr):
+#     return n*arr
+
+# @vectorize([int64(int64,int64), float32(float32,float32), float64(float64,float64)])
+# def add_array(n, arr):
+#     return n+arr
+
+# @vectorize([int64(int64,int64), float32(float32,float32), float64(float64,float64)])
+# def sub_array(n, arr):
+#     return n-arr
+
+# @jit(nopython=True)
+# def ellipse( xc , yc , ax1 , ax2 , angle , X_circle , Y_circle ):
+#     cos_angle = math.cos(angle*np.pi/180)
+#     sin_angle = math.sin(angle*np.pi/180)
+
+#     # x1 = xc + ax1 * cos_angle
+#     # y1 = yc + ax1 * sin_angle
+
+#     # x2 = xc - ax2 * sin_angle
+#     # y2 = yc + ax2 * cos_angle
+
+#     X = multiply_array(ax1, X_circle)
+#     Y = multiply_array(ax2, Y_circle)
+#     # X = ax1 * X_circle
+#     # Y = ax2 * Y_circle
+
+#     xe = add_array(sub_array(multiply_array(X,cos_angle), multiply_array(Y,sin_angle)),xc)
+#     ye = add_array(add_array(multiply_array(Y,cos_angle), multiply_array(X,sin_angle)),yc)
+#     # xe = xc + X*cos_angle - Y*sin_angle
+#     # ye = yc + X*sin_angle + Y*cos_angle
+
+#     return (xe,ye)
 
 @jit(nopython=True)
 def ellipse( xc , yc , ax1 , ax2 , angle , X_circle , Y_circle ):
