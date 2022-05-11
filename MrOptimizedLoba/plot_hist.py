@@ -16,7 +16,7 @@ import pickle
 import os
 import numpy.ma as ma
 
-source = 'BDB_vents_tdm1_1000MIL_020_thickness_masked.asc'
+source = 'LFS1_2001_000_thickness_masked.asc'
 
 # Parse the header using a loop and
 # the built-in linecache module

@@ -696,7 +696,7 @@ for i in range(0, max_slope_units):
     if (xold < xmin) or (xold > xmax) or (yold < ymin) or (yold > ymax):
 
         break
-
+    
     if (plot_lobes_flag) or (plot_flow_flag):
         plt.plot([xold, x_max_slope], [yold, y_max_slope], 'b-')
         
@@ -917,8 +917,8 @@ for flow in range(0, n_flows):
 
         ''' CONVERTED INTO A FUNCTION '''
         # # major semi-axis direction
-        max_slope_angle = np.mod(
-            180 + (180 * np.arctan2(Fy_test, Fx_test) / pi), 360)
+        # max_slope_angle = np.mod(
+        #     180 + (180 * np.arctan2(Fy_test, Fx_test) / pi), 360)
 
         # # slope of the topography at (x[0],y[0])
         # slope = np.sqrt(np.square(Fx_test)+np.square(Fy_test))
@@ -1406,125 +1406,125 @@ for flow in range(0, n_flows):
         # Check the grid points covered by the lobe
         if (saveraster_flag == 1) or (topo_mod_flag >= 1) or (plot_flow_flag):
 
-            lobe_thickness_array[i] = thickness_min + (i-1) * delta_lobe_thickness
-            # print(local_intersection(Xs_local, Ys_local, x[i], y[i], x1[i], x2[i], angle[i], xv, yv, nv2))
-            area_frac_array.append(local_intersection(Xs_local, Ys_local, x[i], y[i], x1[i], x2[i], angle[i], xv, yv, nv2))
+            # lobe_thickness_array[i] = thickness_min + (i-1) * delta_lobe_thickness
+            # # print(local_intersection(Xs_local, Ys_local, x[i], y[i], x1[i], x2[i], angle[i], xv, yv, nv2))
+            # area_frac_array.append(local_intersection(Xs_local, Ys_local, x[i], y[i], x1[i], x2[i], angle[i], xv, yv, nv2))
 
 
             '''HERE START'''
-            # # Compute n_points on the new lobe boundary
-            # [xe, ye] = ellipse(x[i], y[i], x1[i], x2[i],
-            #                    angle[i], X_circle, Y_circle)
+            # Compute n_points on the new lobe boundary
+            [xe, ye] = ellipse(x[i], y[i], x1[i], x2[i],
+                               angle[i], X_circle, Y_circle)
 
-            # # Bounding box for the new lobe
-            # min_xe = np.min(xe)
-            # max_xe = np.max(xe)
+            # Bounding box for the new lobe
+            min_xe = np.min(xe)
+            max_xe = np.max(xe)
 
-            # min_ye = np.min(ye)
-            # max_ye = np.max(ye)
+            min_ye = np.min(ye)
+            max_ye = np.max(ye)
 
-            # xi = (min_xe - xmin)/cell
-            # ix = np.floor(xi)
-            # i_left = ix.astype(int)-1
-            # i_left = np.maximum(0, np.minimum(nx-1, i_left))
+            xi = (min_xe - xmin)/cell
+            ix = np.floor(xi)
+            i_left = ix.astype(int)-1
+            i_left = np.maximum(0, np.minimum(nx-1, i_left))
 
-            # xi = (max_xe - xmin)/cell
-            # ix = np.floor(xi)
-            # i_right = ix.astype(int)+3
-            # i_right = np.maximum(0, np.minimum(nx-1, i_right))
+            xi = (max_xe - xmin)/cell
+            ix = np.floor(xi)
+            i_right = ix.astype(int)+3
+            i_right = np.maximum(0, np.minimum(nx-1, i_right))
 
-            # yj = (min_ye - ymin)/cell
-            # jy = np.floor(yj)
-            # j_bottom = jy.astype(int)-1
-            # j_bottom = np.maximum(0, np.minimum(ny-1, j_bottom))
+            yj = (min_ye - ymin)/cell
+            jy = np.floor(yj)
+            j_bottom = jy.astype(int)-1
+            j_bottom = np.maximum(0, np.minimum(ny-1, j_bottom))
 
-            # yj = (max_ye - ymin)/cell
-            # jy = np.floor(yj)
-            # j_top = jy.astype(int)+3
-            # j_top = np.maximum(0, np.minimum(ny-1, j_top))
+            yj = (max_ye - ymin)/cell
+            jy = np.floor(yj)
+            j_top = jy.astype(int)+3
+            j_top = np.maximum(0, np.minimum(ny-1, j_top))
 
-            # # Copy the full grid within the bounding box on a local one to work on a smaller
-            # # domain and reduce the computational cost
-            # Xs_local = Xs[j_bottom:j_top, i_left:i_right]
-            # Ys_local = Ys[j_bottom:j_top, i_left:i_right]
+            # Copy the full grid within the bounding box on a local one to work on a smaller
+            # domain and reduce the computational cost
+            Xs_local = Xs[j_bottom:j_top, i_left:i_right]
+            Ys_local = Ys[j_bottom:j_top, i_left:i_right]
 
-            # # Compute the fraction of cells covered by the lobe (local indexing)
-            # area_fract = local_intersection(
-            #     Xs_local, Ys_local, x[i], y[i], x1[i], x2[i], angle[i], xv, yv, nv2)
+            # Compute the fraction of cells covered by the lobe (local indexing)
+            area_fract = local_intersection(
+                Xs_local, Ys_local, x[i], y[i], x1[i], x2[i], angle[i], xv, yv, nv2)
 
-            # Zflow_local = area_fract
+            Zflow_local = area_fract
 
-            # # Compute the local integer covering (0-not covered  1-covered)
-            # Zflow_local_int = np.ceil(area_fract)
-            # Zflow_local_int = Zflow_local_int.astype(int)
+            # Compute the local integer covering (0-not covered  1-covered)
+            Zflow_local_int = np.ceil(area_fract)
+            Zflow_local_int = Zflow_local_int.astype(int)
 
-            # # Define the distance (number of lobes) from the vent (local indexing)
-            # Zdist_local = Zflow_local_int * \
-            #     dist_int[i] + 9999 * (Zflow_local == 0)
+            # Define the distance (number of lobes) from the vent (local indexing)
+            Zdist_local = Zflow_local_int * \
+                dist_int[i] + 9999 * (Zflow_local == 0)
 
-            # # update the minimum distance in the global indexing
-            # Zdist[j_bottom:j_top, i_left:i_right] = np.minimum(Zdist[j_bottom:j_top, i_left:i_right],
-            #                                                    Zdist_local)
+            # update the minimum distance in the global indexing
+            Zdist[j_bottom:j_top, i_left:i_right] = np.minimum(Zdist[j_bottom:j_top, i_left:i_right],
+                                                               Zdist_local)
 
-            # # Compute the thickness of the lobe
-            # lobe_thickness = thickness_min + (i-1) * delta_lobe_thickness
+            # Compute the thickness of the lobe
+            lobe_thickness = thickness_min + (i-1) * delta_lobe_thickness
 
-            # # Update the thickness for the grid points selected (global indexing)
-            # Zflow[j_bottom:j_top, i_left:i_right] += lobe_thickness*Zflow_local
+            # Update the thickness for the grid points selected (global indexing)
+            Zflow[j_bottom:j_top, i_left:i_right] += lobe_thickness*Zflow_local
 
-            # Ztot_temp[j_bottom:j_top, i_left:i_right] = Zs[j_bottom:j_top, i_left:i_right] + \
-            #     filling_parameter * Zflow[j_bottom:j_top, i_left:i_right]
+            Ztot_temp[j_bottom:j_top, i_left:i_right] = Zs[j_bottom:j_top, i_left:i_right] + \
+                filling_parameter * Zflow[j_bottom:j_top, i_left:i_right]
 
-            # # Save the bounding box of the i-th lobe
-            # jtop_array[i] = j_top
-            # jbottom_array[i] = j_bottom
+            # Save the bounding box of the i-th lobe
+            jtop_array[i] = j_top
+            jbottom_array[i] = j_bottom
 
-            # iright_array[i] = i_right
-            # ileft_array[i] = i_left
+            iright_array[i] = i_right
+            ileft_array[i] = i_left
 
-            # if (hazard_flag):
+            if (hazard_flag):
 
-            #     # Store the local arrays used later for the hazard map
+                # Store the local arrays used later for the hazard map
 
-            #     if not (Zflow_local_int.shape[0] == (j_top-j_bottom)):
+                if not (Zflow_local_int.shape[0] == (j_top-j_bottom)):
 
-            #         print(Zflow_local_int.shape[0], j_top, j_bottom)
-            #         print(Zflow_local_int.shape[1], i_right, i_left)
-            #         print('')
+                    print(Zflow_local_int.shape[0], j_top, j_bottom)
+                    print(Zflow_local_int.shape[1], i_right, i_left)
+                    print('')
 
-            #     if not (Zflow_local_int.shape[1] == (i_right - i_left)):
+                if not (Zflow_local_int.shape[1] == (i_right - i_left)):
 
-            #         print(Zflow_local_int.shape[0], j_top, j_bottom)
-            #         print(Zflow_local_int.shape[1], i_right, i_left)
-            #         print('')
+                    print(Zflow_local_int.shape[0], j_top, j_bottom)
+                    print(Zflow_local_int.shape[1], i_right, i_left)
+                    print('')
 
-            #     if (np.max(Zflow_local.shape) > Zflow_local_array.shape[1]):
+                if (np.max(Zflow_local.shape) > Zflow_local_array.shape[1]):
 
-            #         print(cell, new_x1, new_x2, new_angle)
+                    print(cell, new_x1, new_x2, new_angle)
 
-            #         print(Zflow_local)
+                    print(Zflow_local)
 
-            #     Zflow_local_array[i, 0:j_top-j_bottom,
-            #                       0:i_right-i_left] = Zflow_local_int
+                Zflow_local_array[i, 0:j_top-j_bottom,
+                                  0:i_right-i_left] = Zflow_local_int
 
-            # if (n_check_loop > 0) and (i > i_first_check):
+            if (n_check_loop > 0) and (i > i_first_check):
 
-            #     i_left_last_lobes = np.min(ileft_array[i-n_check_loop:i])
-            #     i_right_last_lobes = np.max(iright_array[i-n_check_loop:i])
+                i_left_last_lobes = np.min(ileft_array[i-n_check_loop:i])
+                i_right_last_lobes = np.max(iright_array[i-n_check_loop:i])
 
-            #     delta_i_last_lobes = i_right_last_lobes - i_left_last_lobes
+                delta_i_last_lobes = i_right_last_lobes - i_left_last_lobes
 
-            #     j_bottom_last_lobes = np.min(jbottom_array[i-n_check_loop:i])
-            #     j_top_last_lobes = np.max(jtop_array[i-n_check_loop:i])
+                j_bottom_last_lobes = np.min(jbottom_array[i-n_check_loop:i])
+                j_top_last_lobes = np.max(jtop_array[i-n_check_loop:i])
 
-            #     delta_j_last_lobes = j_top_last_lobes - j_bottom_last_lobes
+                delta_j_last_lobes = j_top_last_lobes - j_bottom_last_lobes
 
-            #     max_delta = max(delta_i_last_lobes, delta_j_last_lobes)
+                max_delta = max(delta_i_last_lobes, delta_j_last_lobes)
 
-            #     if (max_delta <= max_cells):
+                if (max_delta <= max_cells):
 
-            #         i_first_check = i + n_check_loop
-            #         np.copyto(Ztot, Ztot_temp)
+                    i_first_check = i + n_check_loop
+                    np.copyto(Ztot, Ztot_temp)
             '''HERE'''
             lobes_counter = lobes_counter + 1
 
@@ -1537,10 +1537,10 @@ for flow in range(0, n_flows):
             np.copyto(Ztot, Ztot_temp)
 
 
-    threads = n_lobes
-    blocks = 1
+    # threads = n_lobes
+    # blocks = 1
 
-    save_at_end[threads,blocks](n_lobes, area_frac_array, i_first_check, lobe_thickness_array, x, y, x1, x2, angle, X_circle, Y_circle, xmin, ymin, nx, ny, cell, Xs, Ys, xv, yv, nv2, dist_int, Zdist, Zflow, Ztot_temp, jtop_array, jbottom_array, iright_array, ileft_array, Zflow_local_array, max_cells, Ztot)
+    # save_at_end[threads,blocks](n_lobes, area_frac_array, i_first_check, lobe_thickness_array, x, y, x1, x2, angle, X_circle, Y_circle, xmin, ymin, nx, ny, cell, Xs, Ys, xv, yv, nv2, dist_int, Zdist, Zflow, Ztot_temp, jtop_array, jbottom_array, iright_array, ileft_array, Zflow_local_array, max_cells, Ztot)
     
     # print("LINE 1193 n lobes time  ", n_lobes_time)
     if (hazard_flag):
@@ -1776,6 +1776,13 @@ if (saveraster_flag == 1):
         print("Plot solution")
 
         plt.pcolormesh(Xs, Ys, masked_Zflow)
+
+
+print("WHAT IS YS AND XS")
+
+print("XS: ",Xs)
+print("Ys: ", Ys)
+
 
 if (plot_flow_flag) or (plot_lobes_flag):
 
