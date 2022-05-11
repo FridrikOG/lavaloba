@@ -103,8 +103,8 @@ print ("")
 
 # read the run parameters form the file inpot_data.py
 
-from input_data_advanced import *
-from input_data import *
+from "/from_cluster/input_data_advanced" import *
+from "/from_cluser/input_data" import *
 
 filling_parameter = 1 - thickening_parameter
 

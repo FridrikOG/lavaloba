@@ -20,7 +20,7 @@ flag_threshold = 1
 plot_lobes_flag = 1
 
 # If plot_lobes_flag = 1 then all the lobes generated are plotted
-plot_flow_flag = 0
+plot_flow_flag = 1
 
 # The number of lobes of the flow is defined accordingly to a random uniform
 # distribution or to a beta law, as a function of the flow number.
