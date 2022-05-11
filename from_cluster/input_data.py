@@ -29,7 +29,7 @@ try:
   flowrate = float(os.environ['flowrate'])
   runtime = float(os.environ['runtime'])
   minnlobes = float(os.environ['minnlobes'])
-except:
+except: 
   # from variables_xVent_yVent_length_flowrate_runtime_minnlobes_test 339377,380305,0.04,5,660,0.7
   xVent = 339377
   yVent = 380305
