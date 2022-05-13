@@ -1,0 +1,8 @@
+2022.05.13 17:46:23 INFO  tracing is disabled for protocol LSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /Users/fjolnirthrastarson/Documents/High Performance Computing/lavaloba.nosync/.metals/lsp.trace.json or /Users/fjolnirthrastarson/Library/Caches/org.scalameta.metals/lsp.trace.json
+2022.05.13 17:46:24 INFO  logging to file /Users/fjolnirthrastarson/Documents/High Performance Computing/lavaloba.nosync/.metals/metals.log
+2022.05.13 17:46:24 INFO  Started: Metals version 0.11.5 in workspace '/Users/fjolnirthrastarson/Documents/High Performance Computing/lavaloba.nosync' for client Visual Studio Code 1.67.0.
+2022.05.13 17:46:30 INFO  time: initialize in 5.74s
+2022.05.13 17:46:30 WARN  Flyway upgrade recommended: H2 2.1.212 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.1.210.
+2022.05.13 17:46:30 WARN  Build server is not auto-connectable.
+2022.05.13 17:46:30 WARN  no build tool detected in workspace '/Users/fjolnirthrastarson/Documents/High Performance Computing/lavaloba.nosync'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2022.05.13 17:48:24 INFO  no build target found for /Users/fjolnirthrastarson/Documents/High Performance Computing/lavaloba.nosync/MrLavaLoba-master/COPYING. Using presentation compiler with project's scala-library version: 3.1.2

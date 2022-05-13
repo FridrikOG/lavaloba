@@ -12,6 +12,7 @@
 
 int main(int argc, char *argv[])
 {
+    
     double starttime, endtime;
     starttime = MPI_Wtime();
     int my_id, ierr, num_procs;
@@ -38,39 +39,30 @@ int main(int argc, char *argv[])
     range[0] = 0;
     range[1] = 0xffff/NO_PROCESSES;
 
-
-    // Determine if this process is the server (root) process
-    // Could pick any number here, as long as it is a rank of one of the
-    // processes.
     MPI_Barrier(MPI_COMM_WORLD);
+    // Everyone gets data from Broadcast
+    MPI_Bcast(range, 2, MPI_INT, 0, MPI_COMM_WORLD);
      if(my_id == server_id)
     {
-       clock_t begin = clock();
 
        printf("Hello I am the server before sync: %d\n", my_id);
-    //    MPI_Barrier(MPI_COMM_WORLD);
-    //    printf("Hello I am the server after sync: %d\n", my_id);
-       for(int i = 1; i < NO_PROCESSES; i++)
-       {
-           range[0] = 1000 * (i - 1);
-           range[1] = range[0] + 1000;
-           int rank_recv;
-           MPI_Send(range, 2, MPI_INT, i, 0, MPI_COMM_WORLD);
+        int rank_recv;
+
+        for(int i = 1; i < NO_PROCESSES; i++)
+           {
            printf("Server: sent to client %d\n", i);
            MPI_Recv((void *)&rank_recv, 1, MPI_INT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE); // recv from all clients
            printf("Server: received from client %d\n", rank_recv);
-       }
+        }
         endtime   = MPI_Wtime();
         printf("That took %f seconds\n",endtime-starttime);
-
-
     }
     else
     // Slave process, receive the array range to calculate, and send
     // it back to the server when finished.
     {
        printf("Hello I am process: %d\n", my_id);
-       MPI_Recv(range, NO_PROCESSES, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    //    MPI_Recv(range, NO_PROCESSES, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
        printf("Client id: %d Received: %d %d\n",my_id, range[0], range[1]);
        // void* data, count, MPI_Datatype, destination, tag, MPI_COMM
        MPI_Send((void *)&my_id, 1, MPI_INT, 0, 0, MPI_COMM_WORLD);   // sends to server
