@@ -1,6 +1,6 @@
 # How to run:
 
-REQUIREMENTS: have python3, pip (or conda installed)
+**REQUIREMENTS**: have python3, pip (or conda installed)
 
 ## Mac instructions:
 ```
