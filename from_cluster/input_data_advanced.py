@@ -25,6 +25,7 @@ plot_flow_flag = 0
 ''' NEW VARIABLE ADDED IN THE HPC PROJECT START:'''
 # 0 if you want to run the version with the Ellipse creation within the loops ( aka not optimized )
 # 1 if you want to run the Ellipse creation outside of the loops and in parallel before plotting
+# you also need to have plot_lobes_flag on if you want to actually do it..
 plot_parallel = 0
 ''' END '''
 
