@@ -1,13 +1,13 @@
 # from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
-from matplotlib.ticker import LinearLocator, FormatStrFormatter
+# from matplotlib.ticker import LinearLocator, FormatStrFormatter
 import matplotlib.pyplot as plt
 import numpy as np
 from linecache import getline
 from scipy.stats import beta
 from matplotlib.patches import Ellipse
-from matplotlib.path import Path
-import matplotlib.patches as patches
+# from matplotlib.path import Path
+# import matplotlib.patches as patches
 from matplotlib.patches import Polygon
 from matplotlib.collections import PatchCollection
 import shapefile
@@ -22,6 +22,9 @@ from random import randrange
 from os.path import exists
 import gc
 
+
+from input_data_advanced import *
+from input_data import *
 
 from multiprocessing import freeze_support
 import concurrent.futures
@@ -44,18 +47,42 @@ import math
 #     return out
 
 
+
+
+def add_Ellipse(ep):
+    # print("TYPE OF PATCHES ", type(ep))
+    # print(ep)
+    # print("IN ADD ELLI ", ax)
+    if (ep[5] == 2):
+        ellip = Ellipse([ep[0],ep[1]], 2*ep[2],2*ep[3], ep[4], facecolor = 'none',edgecolor='r')
+    else: 
+        ellip = Ellipse([ep[0],ep[1]], 2*ep[2],2*ep[3], ep[4], facecolor = 'none',edgecolor='k')     
+    # print("type of patch[5] is ", type(patch[5]))
+    # ax.add_patch(ellip)
+    return ellip
+    
+
+def run_processes(ellipse_patches2):
+    # print("PATCHES IN RUN PROCESSES : ", ellipse_patches2[2])
+    # print("tYPE OF IT ",type(ellipse_patches2))
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        # executor.map(add_Ellipse, ellipse_patches2)
+        results = executor.map(add_Ellipse, ellipse_patches2)
+
+        return results
+
 def do_something(seconds):
     print(f'Sleeping {seconds} second(s)...')
     time.sleep(seconds)
     return f'Done Sleeping...{seconds}'
 
-def add_Ellipse(patch):
-    ellip = Ellipse([patch[0],patch[1]], 2*patch[2],2*patch[3], patch[4], facecolor = 'none',edgecolor='k')
-    ax.add_patch(ellip)
 
-def run_processes(patches):
+def run_seconds(secs):
     with concurrent.futures.ProcessPoolExecutor() as executor:
-        executor.map(add_Ellipse, patches)
+        results = executor.map(do_something, secs)
+
+        for result in results:
+            print(result)
 
 
 @jit(nopython=True)
@@ -267,8 +294,7 @@ if __name__ == '__main__':
     print ("Mr Lava Loba by M.de' Michieli Vitturi and S.Tarquini")
     print ("")
 
-    from input_data_advanced import *
-    from input_data import *
+    
 
 
     # read the run parameters form the file inpot_data.py
@@ -842,9 +868,9 @@ if __name__ == '__main__':
             
             # inside for i in range(0,n_init):
             if ( plot_lobes_flag ) or ( plot_flow_flag):
-                to_plot_centers.append([x[i],y[i]])
+                # to_plot_centers.append([x[i],y[i]])
                 # plot the center of the first lobe        
-                # plt.plot(x[i],y[i],'o')
+                plt.plot(x[i],y[i],'o')
             
             # compute the gradient of the topography(+ eventually the flow)
             # here the centered grid is used (Z values saved at the centers of the pixels)
@@ -927,7 +953,8 @@ if __name__ == '__main__':
 
             # inside for i in range(0,n_init): 
             if ( plot_lobes_flag ):
-                to_ellipse_patch.append([x[i], y[i], x1[i], x2[i], angle[i]])
+                
+                to_ellipse_patch.append([x[i], y[i], x1[i], x2[i], angle[i], 1])
                 # patch.append(Ellipse([x[i],y[i]], 2*x1[i], 2*x2[i], angle[i], facecolor = 'none',edgecolor='k'))
 
 
@@ -1342,7 +1369,7 @@ if __name__ == '__main__':
             # plot the new lobe
             # for i in range(0,n_init):
             if ( plot_lobes_flag == 1 ):
-                to_ellipse_patch2.append([x_new,y_new,new_x1,new_x2,new_angle])
+                to_ellipse_patch2.append([x_new,y_new,new_x1,new_x2,new_angle, 2])
                 # patch.append(Ellipse([x_new,y_new], 2*new_x1, 2*new_x2, new_angle, facecolor = 'none',edgecolor='r'))
 
             # print("line 1207 (PLOTTING) took ", plotting_time)        
@@ -1559,30 +1586,44 @@ if __name__ == '__main__':
 
     ## we need to time it here
 
-
-
-
-    
-
-
-    # run_processes(to_ellipse_patch2)
+    print("WHAT IS AX ",ax)
+    # print("THE PATCH 5?? ",to_ellipse_patch[0][5])
 
     for i in range(0, len(to_plot_centers)):
         plt.plot(to_plot_centers[i][0],to_plot_centers[i][1],'o')
 
-    for i in range(0,len(to_ellipse_patch)):
-        # plt.plot(to_plot_centers[i][0],to_plot_centers[i][1],'o')
-        patch1 = to_ellipse_patch[i]
-        ax.add_patch(Ellipse([patch1[0],patch1[1]], 2*patch1[2],2*patch1[3], patch1[4], facecolor = 'none',edgecolor='k'))
+    # for i in range(0,len(to_ellipse_patch)):
+    #     # plt.plot(to_plot_centers[i][0],to_plot_centers[i][1],'o')
+    #     patch1 = to_ellipse_patch[i]
+    #     ax.add_patch(Ellipse([patch1[0],patch1[1]], 2*patch1[2],2*patch1[3], patch1[4], facecolor = 'none',edgecolor='k'))
         
-    for i in range(0, len(to_ellipse_patch2)):
-        patch2 = to_ellipse_patch2[i]
-        ax.add_patch(Ellipse([patch2[0],patch2[1]], 2*patch2[2],2*patch2[3], patch2[4], facecolor = 'none',edgecolor='r'))
+    # print(to_ellipse_patch2)
+
+    # secs = [[5,2], [4,2], [3,1], [2,9], [1,0]]
+
+    # print("TYPE OF to_ellipse_patch2 ", type(to_ellipse_patch2))
+    # print("ELLIPSE2 0 OUTSIDE OF RUN PROCESSES",to_ellipse_patch2[2])
+    # run_processes(to_ellipse_patch2)
+    # print(next(ellips))
 
 
-    if ( plot_lobes_flag == 1 ):
-        p = PatchCollection(patch, match_original = True)
-        ax.add_collection(p)
+
+    ellip_k = run_processes(to_ellipse_patch)
+    ellip_r = run_processes(to_ellipse_patch2)
+
+    for el in ellip_k: 
+        ax.add_patch(el)
+    for el in ellip_r:
+        ax.add_patch(el)
+
+    # for i in range(0, len(to_ellipse_patch2)):
+    #     patch2 = to_ellipse_patch2[i]
+    #     ax.add_patch(Ellipse([patch2[0],patch2[1]], 2*patch2[2],2*patch2[3], patch2[4], facecolor = 'none',edgecolor='r'))
+
+
+    # if ( plot_lobes_flag == 1 ):
+    #     p = PatchCollection(patch, match_original = True)
+    #     ax.add_collection(p)
 
     print ('')
     print ('')
