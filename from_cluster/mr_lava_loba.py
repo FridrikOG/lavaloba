@@ -1569,7 +1569,7 @@ if __name__ == '__main__':
 
 
     
-    if plot_parallel == 1:
+    if plot_parallel == 1 and plot_lobes_flag:
         ''' PLOTTING OUTSIDE OF LOOPS '''
         for i in range(0, len(to_plot_centers)):
             plt.plot(to_plot_centers[i][0],to_plot_centers[i][1],'o')
