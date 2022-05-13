@@ -74,7 +74,7 @@ hazard_flag = 1
 masking_threshold = 0.96
 
 # Number of flows
-n_flows = 700
+n_flows = 1400
 
 # Minimum number of lobes generated for each flow
 min_n_lobes = 1200
