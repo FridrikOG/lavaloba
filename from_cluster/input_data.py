@@ -124,7 +124,7 @@ print("nflows: ",n_flows)
 n_flows = n_flows[0]
 print("nflows: ",n_flows)
 #print("type: ",type(n_flows))
-n_flows = 200
+#n_flows = 200
 # Minimum number of lobes generated for each flow
 # default is 2 
 #min_n_lobes =     2500
