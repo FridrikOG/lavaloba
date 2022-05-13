@@ -20,7 +20,14 @@ flag_threshold = 1
 plot_lobes_flag = 1
 
 # If plot_lobes_flag = 1 then all the lobes generated are plotted
-plot_flow_flag = 1
+plot_flow_flag = 0
+
+''' NEW VARIABLE ADDED IN THE HPC PROJECT START:'''
+# 0 if you want to run the version with the Ellipse creation within the loops ( aka not optimized )
+# 1 if you want to run the Ellipse creation outside of the loops and in parallel before plotting
+plot_parallel = 0
+''' END '''
+
 
 # The number of lobes of the flow is defined accordingly to a random uniform
 # distribution or to a beta law, as a function of the flow number.
