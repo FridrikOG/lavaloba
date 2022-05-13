@@ -1571,6 +1571,7 @@ if __name__ == '__main__':
     
     if plot_parallel == 1 and plot_lobes_flag:
         ''' PLOTTING OUTSIDE OF LOOPS '''
+        print("I am plotting in parallel")
         for i in range(0, len(to_plot_centers)):
             plt.plot(to_plot_centers[i][0],to_plot_centers[i][1],'o')
 
@@ -1831,7 +1832,8 @@ if __name__ == '__main__':
         plt.axis('equal')
         plt.ylim([ycmin,ycmax])
         plt.xlim([xcmin,xcmax])
-        plt.show()
+        plt.savefig("plotted.png")
+        # plt.show()
 
 
 
