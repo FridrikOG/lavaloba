@@ -868,9 +868,9 @@ if __name__ == '__main__':
             
             # inside for i in range(0,n_init):
             if ( plot_lobes_flag ) or ( plot_flow_flag):
-                # to_plot_centers.append([x[i],y[i]])
+                to_plot_centers.append([x[i],y[i]])
                 # plot the center of the first lobe        
-                plt.plot(x[i],y[i],'o')
+                # plt.plot(x[i],y[i],'o')
             
             # compute the gradient of the topography(+ eventually the flow)
             # here the centered grid is used (Z values saved at the centers of the pixels)
