@@ -10,6 +10,6 @@
 
 echo "Running mrlavaloba on a single CPU core"
 
-/scratch/MrLavaLoba/run_lava
+/scratch/hpc_2022/fjolnir/MrLavaLoba/run_lava
 
 date
