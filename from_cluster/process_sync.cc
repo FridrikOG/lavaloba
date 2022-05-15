@@ -12,6 +12,7 @@
 
 int main(int argc, char *argv[])
 {
+    MPI_Status status;
     double starttime, endtime;
     starttime = MPI_Wtime();
     int my_id, ierr, num_procs;
@@ -45,8 +46,6 @@ int main(int argc, char *argv[])
     MPI_Barrier(MPI_COMM_WORLD);
      if(my_id == server_id)
     {
-       clock_t begin = clock();
-
        printf("Hello I am the server before sync: %d\n", my_id);
     //    MPI_Barrier(MPI_COMM_WORLD);
     //    printf("Hello I am the server after sync: %d\n", my_id);

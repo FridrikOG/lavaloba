@@ -4,7 +4,7 @@ import os
 # unless the environmental variable "DESTINATION" is set, in which case
 # that will be used.
 
-run_name = 'fagralike'
+run_name = '/scratch/hpc_2022/fjolnir/MrLavaLoba/fagralike'
 #these are the variables that will be read on from a .csv file when i launch the runs
 xVent    = 0.0
 yVent    = 0.0
