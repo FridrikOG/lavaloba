@@ -125,5 +125,5 @@ snakeviz profile1.prof
 ```
 This will open your browser window with 
 
-![Snakeviz Example image](./MrOptimisticLoba/snakevizExample.png)
+![Snakeviz Example image](MrOptimisticLoba/snakevizExample.png)
 
