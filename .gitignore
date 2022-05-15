@@ -66,10 +66,6 @@ from_cluster/fagralike_000_avg_thick.txt
 from_cluster/fagralike_004_avg_thick.txt
 from_cluster/fagralike_004_avg_thick.txt
 from_cluster/input_data.py
-*.txt
-*.png
-*.png
-*.png
 from_cluster/input_data.py
 from_cluster/input_data.py
 from_cluster/input_data.py
