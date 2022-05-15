@@ -113,7 +113,7 @@ hazard_flag = 1
 masking_threshold = 0.96
 
 # Number of flows
-n_flows = 33
+n_flows = 400
 #small
 
 
